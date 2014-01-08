@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Do a FFT transform of a JPEG file, then transform it back
+# using only the magnitude information
+
+if [ "$#" -lt 1 ]; then
+    echo 'magnitudeFFT JPEGFILE'
+    exit 65
+fi
+
+JPEG=$1
+PNG=${JPEG%.*}
+
+echo "Going to convert "$JPEG
+
+convert $JPEG $PNG.png
+convert $PNG.png -fft $PNG"_fft.png"
+convert $PNG"_fft-0.png"  xc:'gray(50%)' -ift $PNG"_magnitude.png"
+convert $PNG"_magnitude.png" $PNG"_magnitude.jpg"
+convert $JPEG $PNG"_magnitude.jpg" +append $PNG"_both.jpg"
+
+rm $PNG"_fft-"*".png"
+rm $PNG".png"
+rm $PNG"_magnitude.png"
+
+echo "Magnitude transform: "$PNG"_magnitude.jpg"
+echo "Side by side comparison: "$PNG"_both.jpg"
