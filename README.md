@@ -11,4 +11,4 @@ Dependencies
 Components
 ----------
 
-* magnitudeFFT: do a FFT of jpeg, then transform it back using just the magnitude information
+* magnitudeFFT: do a FFT of picture, then transform it back using just the magnitude information
