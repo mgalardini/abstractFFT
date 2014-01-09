@@ -19,5 +19,6 @@ convert $PICFILE $PIC"_magnitude.jpg" +append $PIC"_both.jpg"
 
 rm $PIC"_fft-"*".png"
 
+echo ""
 echo "Magnitude transform: "$PIC"_magnitude.jpg"
 echo "Side by side comparison: "$PIC"_both.jpg"
