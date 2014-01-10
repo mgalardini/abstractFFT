@@ -18,14 +18,14 @@ echo "Going to swap "$PICFILE1" and "$PICFILE2
 
 convert $PICFILE1 -fft $PIC1"_fft.png"
 convert $PICFILE2 -fft $PIC2"_fft.png"
-convert $PIC1"_fft-0.png" $PIC2"_fft-1.png" -ift $OUTNAME"-1.png"
-convert $PIC2"_fft-0.png" $PIC1"_fft-1.png" -ift $OUTNAME"-2.png"
-convert $OUTNAME"-1.png" $OUTNAME"-2.png" +append $OUTNAME"_both.jpg"
+convert $PIC1"_fft-0.png" $PIC2"_fft-1.png" -ift $OUTNAME"-1.jpg"
+convert $PIC2"_fft-0.png" $PIC1"_fft-1.png" -ift $OUTNAME"-2.jpg"
+convert $OUTNAME"-1.jpg" $OUTNAME"-2.jpg" +append $OUTNAME"_both.jpg"
 
 rm $PIC1"_fft-"*".png"
 rm $PIC2"_fft-"*".png"
 
 echo ""
-echo "First swap: "$OUTNAME"-1.png"
-echo "Second swap: "$OUTNAME"-2.png"
+echo "First swap: "$OUTNAME"-1.jpg"
+echo "Second swap: "$OUTNAME"-2.jpg"
 echo "Side by side comparison: "$OUTNAME"_both.jpg"
