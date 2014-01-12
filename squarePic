@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Make a 500px square crop of an image 
+
+if [ "$#" -lt 2 ]; then
+    echo 'squarePic PICFILE OUTFILE'
+    exit 65
+fi
+
+PICFILE=$1
+OUTFILE=$2
+
+echo "Going to convert "$PICFILE
+
+convert -define jpeg:size=500x500 $PICFILE -thumbnail 500x500^ -gravity center -extent 500x500 $OUTFILE
+
+echo ""
+echo "Squared: "$OUTFILE
