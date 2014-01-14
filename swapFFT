@@ -3,7 +3,7 @@
 # Do a FFT transform of two pictures, then transform them back
 # swapping the phase information
 
-if [ "$#" -lt 2 ]; then
+if [ "$#" -lt 3 ]; then
     echo 'USAGE: swapFFT PICFILE1 PICFILE2 OUTNAME'
     exit 65
 fi
@@ -21,6 +21,8 @@ convert $PICFILE2 -fft $PIC2"_fft.png"
 convert $PIC1"_fft-0.png" $PIC2"_fft-1.png" -ift $OUTNAME"-1.jpg"
 convert $PIC2"_fft-0.png" $PIC1"_fft-1.png" -ift $OUTNAME"-2.jpg"
 convert $OUTNAME"-1.jpg" $OUTNAME"-2.jpg" +append $OUTNAME"_both.jpg"
+convert $PICFILE1 $PICFILE2 +append $OUTNAME"_input.jpg"
+convert $OUTNAME"_input.jpg" $OUTNAME"_both.jpg" -append $OUTNAME"_all.jpg"
 
 rm $PIC1"_fft-"*".png"
 rm $PIC2"_fft-"*".png"
@@ -28,4 +30,7 @@ rm $PIC2"_fft-"*".png"
 echo ""
 echo "First swap: "$OUTNAME"-1.jpg"
 echo "Second swap: "$OUTNAME"-2.jpg"
-echo "Side by side comparison: "$OUTNAME"_both.jpg"
+echo "Side by side comparison (inputs): "$OUTNAME"_input.jpg"
+echo "Side by side comparison (outputs): "$OUTNAME"_both.jpg"
+echo "Side by side comparison (all): "$OUTNAME"_all.jpg"
+
