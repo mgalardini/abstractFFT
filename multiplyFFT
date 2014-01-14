@@ -1,0 +1,38 @@
+#!/bin/bash
+
+#
+
+if [ "$#" -lt 2 ]; then
+    echo 'multiplyFFT PICFILE PICMUTLIPLY'
+    exit 65
+fi
+
+PICFILE=$1
+PIC=${PICFILE%.*}
+
+PICMULTIPLY=$2
+PICM=${PICMULTIPLY%.*}
+
+echo "Going to multiply "$PICFILE" using "$PICMULTIPLY
+
+# FFT
+convert $PICFILE -fft $PIC"_fft.png"
+convert $PICMULTIPLY -fft $PICM"_fft.png"
+
+# Enhance the magnitude
+convert $PIC"_fft-0.png" -auto-level -evaluate log 1000 $PIC"_fft-01.png"
+convert $PICM"_fft-0.png" -auto-level -evaluate log 10000 $PICM"_fft-01.png"
+
+# Multiply and merge
+convert $PIC"_fft-01.png" $PICM"_fft-01.png" -compose difference -composite -threshold 1000 -negate $PIC"_fft-001.png"
+#convert $PIC"_fft-001.png" -blur 0x5 -level 50x100% $PIC"_fft-0001.png"
+convert $PICFILE -fft \( -clone 0 $PIC"_fft-001.png" -compose multiply -composite \) -swap 0 +delete -ift $PIC"_multiply.jpg"
+
+# Side to side comparison w/ inputs
+convert $PICFILE $PICMULTIPLY $PIC"_multiply.jpg" +append $PIC"_both.jpg"
+
+rm $PIC"_fft-"*".png"
+
+echo ""
+echo "Multiply transform: "$PIC"_multiply.jpg"
+echo "Side by side comparison: "$PIC"_both.jpg"
