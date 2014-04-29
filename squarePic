@@ -3,7 +3,7 @@
 # Make a 500px square crop of an image 
 
 if [ "$#" -lt 2 ]; then
-    echo 'squarePic PICFILE OUTFILE'
+    echo 'squarePic PICFILE OUT'
     exit 65
 fi
 

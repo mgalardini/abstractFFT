@@ -3,22 +3,25 @@
 # Do a FFT transform of a picture, then transform it back
 # using only the magnitude information
 
-if [ "$#" -lt 1 ]; then
-    echo 'magnitudeFFT PICFILE'
+if [ "$#" -lt 3 ]; then
+    echo 'magnitudeFFT PICFILE OUT1 OUT2'
     exit 65
 fi
 
 PICFILE=$1
 PIC=${PICFILE%.*}
 
+OUT1=$2
+OUT2=$3
+
 echo "Going to convert "$PICFILE
 
 convert $PICFILE -fft $PIC"_fft.png"
-convert $PIC"_fft-0.png"  xc:'gray(50%)' -ift $PIC"_magnitude.jpg"
-convert $PICFILE $PIC"_magnitude.jpg" +append $PIC"_both.jpg"
+convert $PIC"_fft-0.png"  xc:'gray(50%)' -ift $OUT1".jpg"
+convert $PICFILE $OUT1".jpg" +append $OUT2".jpg"
 
 rm $PIC"_fft-"*".png"
 
 echo ""
-echo "Magnitude transform: "$PIC"_magnitude.jpg"
-echo "Side by side comparison: "$PIC"_both.jpg"
+echo "Magnitude transform: "$OUT1".jpg"
+echo "Side by side comparison: "$OUT2".jpg"
