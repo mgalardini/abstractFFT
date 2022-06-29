@@ -2,17 +2,18 @@
 
 # Make a 500px square crop of an image 
 
-if [ "$#" -lt 2 ]; then
-    echo 'squarePic PICFILE OUT'
+if [ "$#" -lt 3 ]; then
+    echo 'squarePic PICFILE OUT PX'
     exit 65
 fi
 
 PICFILE=$1
 OUTFILE=$2
+DIMENSION=$3
 
 echo "Going to convert "$PICFILE
 
-convert -define jpeg:size=500x500 $PICFILE -thumbnail 500x500^ -gravity center -extent 500x500 $OUTFILE
+convert -define jpeg:size=$DIMENSIONx$DIMENSION $PICFILE -thumbnail $DIMENSIONx$DIMENSION^ -gravity center -extent $DIMENSIONx$DIMENSION $OUTFILE
 
 echo ""
 echo "Squared: "$OUTFILE
